@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Segment Prediction</title>
+</head>
+<body>
+    <h1>Customer Segment Prediction</h1>
+    <form id="segmentForm">
+        <label for="balance">Balance:</label>
+        <input type="number" id="balance" name="balance" required><br><br>
+
+        <!-- Add more input fields for other features -->
+
+        <button type="submit">Predict Segment</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('segmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = new FormData(this);
+            fetch('/', {
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(form.entries())),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = `Predicted Segment: ${data.predicted_segment}`;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
